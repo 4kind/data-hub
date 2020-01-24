@@ -63,33 +63,37 @@ pimcore.plugin.datahub.configItem = Class.create(pimcore.element.abstract, {
 
     showInfo: function () {
 
-        var footer = this.tab.getDockedComponent('footer');
+        var footer = this.tab.getDockedComponent('footer'),
+            type = this.data.general.type,
+            name = this.data.general.name;
 
         footer.removeAll();
 
-        footer.add({
-            xtype: 'button',
-            text: t('plugin_pimcore_datahub_graphql_open_explorer_in_iframe'),
-            iconCls: 'pimcore_icon_iframe',
-            handler: function () {
-                this.openExplorer(function (explorerUrl) {
-                    pimcore.helpers.openGenericIframeWindow("plugin_datahub_iframe_" + this.data.general.name, explorerUrl, "plugin_pimcore_datahub_icon_graphql",
-                        t("plugin_pimcore_datahub_graphql_iexplorer") + " - " + this.data.general.name
-                    );
-                }.bind(this));
-            }.bind(this)
-        });
+        if (type === 'graphql') {
+            footer.add({
+                xtype: 'button',
+                text: t('plugin_pimcore_datahub_graphql_open_explorer_in_iframe'),
+                iconCls: 'pimcore_icon_iframe',
+                handler: function () {
+                    this.openExplorer(function (explorerUrl) {
+                        pimcore.helpers.openGenericIframeWindow("plugin_datahub_iframe_" + name, explorerUrl, "plugin_pimcore_datahub_icon_graphql",
+                            t("plugin_pimcore_datahub_graphql_iexplorer") + " - " + name
+                        );
+                    }.bind(this));
+                }.bind(this)
+            });
 
-        footer.add({
-            xtype: 'button',
-            text: t('plugin_pimcore_datahub_graphql_open_explorer_in_tab'),
-            iconCls: 'pimcore_icon_open_window',
-            handler: function () {
-                this.openExplorer(function (explorerUrl) {
-                    window.open(explorerUrl, '_blank');
-                }.bind(this));
-            }.bind(this)
-        });
+            footer.add({
+                xtype: 'button',
+                text: t('plugin_pimcore_datahub_graphql_open_explorer_in_tab'),
+                iconCls: 'pimcore_icon_open_window',
+                handler: function () {
+                    this.openExplorer(function (explorerUrl) {
+                        window.open(explorerUrl, '_blank');
+                    }.bind(this));
+                }.bind(this)
+            });
+        }
 
         footer.add({
             text: t("save"),

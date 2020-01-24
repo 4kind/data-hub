@@ -75,7 +75,11 @@ pimcore.plugin.datahub.config = Class.create({
                         text: t('plugin_pimcore_datahub_type_graphql'),
                         iconCls: "plugin_pimcore_datahub_icon_graphql",
                         handler: this.addField.bind(this, "graphql")
-                    },{
+                    }, {
+                        text: t('plugin_pimcore_datahub_type_rest'),
+                        iconCls: "plugin_pimcore_datahub_icon_rest",
+                        handler: this.addField.bind(this, "rest")
+                    }, {
                         text: t('plugin_pimcore_datahub_type_locked'),
                         iconCls: "plugin_pimcore_datahub_icon_locked",
                         disabled: true

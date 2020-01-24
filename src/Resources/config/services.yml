@@ -29,3 +29,9 @@ services:
         arguments:
             # fetch the bundle via expression language
             $bundle: "@=service('kernel').getBundle('PimcoreDataHubBundle')"
+
+    Pimcore\Bundle\DataHubBundle\Rest\:
+        resource: '../../Rest'
+
+    Pimcore\Bundle\DataHubBundle\Helper\:
+        resource: '../../Helper'

@@ -14,6 +14,10 @@
     background: url(/bundles/pimcoredatahub/img/graphql.svg) center center no-repeat !important;
 }
 
+.plugin_pimcore_datahub_icon_rest {
+    background: url(/bundles/pimcoredatahub/img/rest.svg) center center no-repeat !important;
+}
+
 .plugin_pimcore_datahub_icon_alias {
     background: url(/bundles/pimcoreadmin/img/flat-color-icons/alphabetical_sorting_az.svg) center center no-repeat !important;
 }

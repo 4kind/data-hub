@@ -28,17 +28,15 @@ use Pimcore\Bundle\DataHubBundle\GraphQL\Query\QueryType;
 use Pimcore\Bundle\DataHubBundle\GraphQL\Service;
 use Pimcore\Bundle\DataHubBundle\PimcoreDataHubBundle;
 use Pimcore\Cache\Runtime;
-use Pimcore\Controller\FrontendController;
 use Pimcore\Localization\LocaleServiceInterface;
 use Pimcore\Logger;
 use Pimcore\Model\Factory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class WebserviceController extends FrontendController
+class WebserviceController extends AbstractSecurityController
 {
     /**
      * @var EventDispatcherInterface
@@ -169,7 +167,7 @@ class WebserviceController extends FrontendController
                 ],
             ];
         }
-        
+
         $origin = '*';
         if (!empty($_SERVER['HTTP_ORIGIN'])) {
             $origin = $_SERVER['HTTP_ORIGIN'];
@@ -178,28 +176,7 @@ class WebserviceController extends FrontendController
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
         header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
-        
+
         return new JsonResponse($output);
-    }
-
-    /**
-     * @param Request $request
-     * @param Configuration $configuration
-     *
-     * @return void
-     *
-     * @throws AccessDeniedHttpException
-     */
-    protected function performSecurityCheck(Request $request, Configuration $configuration): void
-    {
-        $securityConfig = $configuration->getSecurityConfig();
-        if ($securityConfig['method'] === 'datahub_apikey') {
-            $apiKey = $request->get('apikey');
-            if ($apiKey === $securityConfig['apikey']) {
-                return;
-            }
-        }
-
-        throw new AccessDeniedHttpException('Permission denied, apikey not valid');
     }
 }
